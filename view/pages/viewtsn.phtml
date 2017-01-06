@@ -1,0 +1,90 @@
+<?php
+	global $tsn, $tsn_info, $parent_tsn_arr, $common_names, $children_tsn_arr;
+?>
+
+<?php if ($tsn == ''): ?>
+	<h1>Browse all things</h1>
+	
+	<div class="nodeContainer">
+		<?php foreach ($children_tsn_arr as $child): ?>
+			<div class="node">
+				<div class="name"><a href="?page=viewtsn&tsn=<?=$child['tsn']?>"><?=$child['complete_name']?></a></div>
+				<div><?=str_replace(", ", ",<br/>", $child['vernacular_name'])?></div>
+			</div>
+		<?php endforeach; ?>
+	</div>
+	
+	
+	
+<?php else:
+	$indent = 10;
+	?>
+	<h1><?=$tsn_info['complete_name']?> <?=$tsn_info['rank_name']?></h1>
+	<?=$common_names?>
+
+	<div class="hierarchychart">
+		<?php for ($p=count($parent_tsn_arr)-1; $p>=0; $p--):
+			$rank_name = strtolower($parent_tsn_arr[$p]['rank_name']);
+			?>
+			<div class="hierarchylabel <?=$rank_name?>" style="padding-right: <?=$indent?>px">
+				<?=$parent_tsn_arr[$p]['rank_name']?>
+			</div>
+			<div class="hierarchy <?=$rank_name?>" style="background-color: <?='#'.$parent_tsn_arr[$p]['backgroundColor']?>; color: <?='#'.$parent_tsn_arr[$p]['color']?>;">
+				<a href="?page=viewtsn&tsn=<?=$parent_tsn_arr[$p]['tsn']?>" style="color: <?='#'.$parent_tsn_arr[$p]['color']?>;"><?=$parent_tsn_arr[$p]['complete_name']?></a>
+				<div class="childrencount"><?=number_format($parent_tsn_arr[$p]['childrencount'])?></div>
+			</div>
+			<?php
+			$indent += 15;
+		endfor; ?>
+			
+		<div class="hierarchylabel <?=strtolower($tsn_info['rank_name'])?> highlight" style="padding-right: <?=$indent?>px">
+			<?=$tsn_info['rank_name']?>
+		</div>
+		<div class="hierarchy <?=$tsn_info['rank_name']?> highlight">
+			<?=$tsn_info['complete_name']?>
+			<?php if ($tsn_info['childrencount'] > 0): ?>
+				<div class="childrencount"><?=number_format($tsn_info['childrencount'])?></div>
+			<?php endif; ?>
+		</div>
+		<?php if (isset($tsn_info['linkUrl']) || isset($tsn_info['imageUrl'])): ?>
+			<div>
+				<div class="hierarchylabel lowest" style="padding-right: <?=$indent?>px"></div>
+				<div class="moreInfoContainer">
+					<div class="thumbnail">
+						<?php if (isset($tsn_info['imageUrl'])): ?>
+							<img class="thumbnail" src="<?=$tsn_info['imageUrl']?>" />
+						<?php endif; ?>
+					</div>
+						
+					<div class="information">
+						<?php if (isset($tsn_info['linkUrl'])): ?>
+							<a class="external" href="<?=$tsn_info['linkUrl']?>"><?=$tsn_info['complete_name']?> on <?=$tsn_info['linkType']?></a>
+						<?php endif; ?>
+					</div>
+					
+				</div>
+			</div>
+		<?php endif; ?>
+		
+		<?php
+		$indent += 15;
+		$childcount = count($children_tsn_arr);
+		for ($c=0; $c<$childcount; $c++):
+			$rank_name = strtolower($children_tsn_arr[$c]['rank_name']);
+			?>
+			<div class="hierarchylabel <?=$rank_name?> <?=($children_tsn_arr[$c]['rank_name']==$children_tsn_arr[$childcount-1]['rank_name'])?'lowest':''?>" style="padding-right: <?=$indent?>px">
+				<?=($c==0)?$children_tsn_arr[$c]['rank_name']:''?>
+			</div>
+			<div class="hierarchy <?=$rank_name?> <?=($children_tsn_arr[$c]['rank_name']==$children_tsn_arr[$childcount-1]['rank_name'])?'lowest':''?>" style="background-color: <?='#'.$children_tsn_arr[$c]['backgroundColor']?>; color: <?='#'.$children_tsn_arr[$c]['color']?>;">
+				<a href="?page=viewtsn&tsn=<?=$children_tsn_arr[$c]['tsn']?>" style="color: <?='#'.$children_tsn_arr[$c]['color']?>;"><?=$children_tsn_arr[$c]['complete_name']?></a>
+				<?=($children_tsn_arr[$c]['vernacular_name']!='')?'('.$children_tsn_arr[$c]['vernacular_name'].')':''?>
+				<?php if ($children_tsn_arr[$c]['childrencount'] > 0): ?>
+					<div class="childrencount"><?=number_format($children_tsn_arr[$c]['childrencount'])?></div>
+				<?php endif; ?>
+			</div>
+		<?php endfor; ?>
+	</div>
+<?php endif; ?>
+
+
+

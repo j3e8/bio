@@ -1,0 +1,51 @@
+<?php
+	global $search_results, $search_term;
+?>
+
+<h1>Search for a living thing</h1>
+<form name="creatureReport" id="creatureReport" action="?page=search" method="GET">
+	<input type="hidden" name="page" value="search" />
+	<input type="text" name="q" id="q" placeholder="e.g. seahorse" value="<?=$search_term?>"/>
+	<input type="submit" name="searchButton" value="Search" />
+</form>
+
+<?php if (!empty($search_results)): ?>
+	<table>
+		<thead>
+		<tr>
+			<th class="results">Common name(s)</th>
+			<th class="results lessImportant">Scientific name</th>
+			<th class="results lessImportant">Kingdom</th>
+		</tr>
+		</thead>
+		<tbody>
+		<?php
+		for ($s=0; $s<count($search_results); $s++): ?>
+			<tr>
+				<td class="results">
+					<?=$search_results[$s]['vernacular_name']?>
+					<?php
+						while ($s+1 < count($search_results) && $search_results[$s+1]['tsn'] == $search_results[$s]['tsn']):
+							?>,<br/><?=$search_results[$s+1]['vernacular_name']?>
+							<?php
+							$s++;
+						endwhile;
+					?>
+				</td>
+				<td class="results lessImportant"><a href="?page=viewtsn&tsn=<?=$search_results[$s]['tsn']?>"><?=$search_results[$s]['complete_name']?></a></td>
+				<td class="results lessImportant"><?=$search_results[$s]['kingdom_name']?></td>
+			</tr>
+		<?php endfor; ?>
+		</tbody>
+	</table>
+<?php elseif (strlen($search_term) < 4 && $search_term != ''): ?>
+	<i>Sorry, due to the general cheapness of this hosting environment, you cannot search for words with 
+		fewer than 4 letters!</i>
+<?php elseif ($search_term != ''): ?>
+	<i>Sorry, there are no organisms matching your search.</i>
+	
+	<div class="p">
+	It's most likely that the database doesn't know that name for the species you're searching.
+	</div>
+<?php endif; ?>
+

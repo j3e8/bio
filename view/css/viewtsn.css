@@ -1,0 +1,18 @@
+div.moreInfoContainer {
+	overflow: hidden;
+}
+div.thumbnail {
+	float: left;
+}
+img.thumbnail {
+	max-height: 100px;
+	max-width: 120px;
+}
+div.information {
+	overflow: hidden;
+	padding: 15px;
+}
+a.external { font-style: italic; text-decoration: none; }
+a.external:visited { font-style: italic; text-decoration: none; }
+a.external:hover { font-style: italic; text-decoration: underline; }
+a.external:active { font-style: italic; text-decoration: none; }

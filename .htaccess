@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteRule ^ng/([^/]+)/([^/]+)(/(.*))?$ runController.php?class=$1&method=$2&$4
+RewriteRule ^((?!view)[a-z0-9\-_]+)(/(.*))?$ runController.php?page=$1&$3

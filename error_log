@@ -1,0 +1,6 @@
+[24-Feb-2014 17:14:43 UTC] PHP Warning:  Illegal string offset 'complete_name' in /home/madisonavenueinc/public_html/bio/findWikipediaImages.php on line 18
+[24-Feb-2014 17:14:43 UTC] PHP Warning:  preg_match(): Unknown modifier 'g' in /home/madisonavenueinc/public_html/bio/findWikipediaImages.php on line 21
+[24-Feb-2014 17:16:13 UTC] PHP Warning:  Illegal string offset 'complete_name' in /home/madisonavenueinc/public_html/bio/findWikipediaImages.php on line 18
+[24-Feb-2014 17:16:13 UTC] PHP Warning:  preg_match(): Unknown modifier 'g' in /home/madisonavenueinc/public_html/bio/findWikipediaImages.php on line 21
+[24-Feb-2014 17:16:33 UTC] PHP Notice:  Array to string conversion in /home/madisonavenueinc/public_html/bio/findWikipediaImages.php on line 17
+[25-Feb-2014 17:39:33 UTC] PHP Warning:  file_get_contents(): Filename cannot be empty in /home/madisonavenueinc/public_html/bio/insertData.php on line 9
